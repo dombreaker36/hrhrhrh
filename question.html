@@ -26,10 +26,16 @@
             <div class="header">
                 <div class="head">
                     <h2>All Questions</h2>
-                    <button>Ask Question</button>
+                    <form class="form2">
+                        <label for="textarea">
+                            <label for="textarea">Ask Question:</label>
+                        <textarea id="textarea" cols="30" rows="10"></textarea>
+                        <input type="submit" class="btn submitbtn" value="Post Question">
+                        </label>
+                    </form>
                 </div>
                 <div class="head-2">
-                    <h3 class="no-ques">22,690,053 questions</h3>
+                    <h3><span class="no-ques"></span> Questions</h3>
                     <div class="sort">
                         <p>Newest</p>
                         <p>Active</p>
@@ -41,19 +47,22 @@
             <div class="main">
                 <div class="vav">
                     <h4>0 votes</h4>
-                    <h4>0 answers</h4>
+                    <h4><span class="number-ans"></span> answers</h4>
                     <h4>2 views</h4>
                 </div>
                 <div class="question-1">
-                    <p>
-                        <a href="https://stackoverflow.com/questions/72660069/notification-update-from-a-service-when-app-is-closed">Notification update from a service when app is closed?</a>
-                    </p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore recusandae perferendis tempora natus ullam doloremque voluptas rerum dolor praesentium atque.</p>
+                    <!-- <form class="form3">
+                        <label for="textarea">
+                            <label for="textarea">Answer Question:</label>
+                        <textarea id="textarea" cols="30" rows="10"></textarea>
+                        <input type="submit" class="btn submitbtn" value="Post Answer">
+                        </label>
+                    </form> -->
                 </div>
             </div>
         </div>
     </main>
-
+    <script src="./app.js"></script>
     <script src="https://kit.fontawesome.com/a7cbf7ef0e.js" crossorigin="anonymous"></script>
 </body>
 

@@ -1,0 +1,28 @@
+{
+    "dependencies": {
+        "body": "^5.1.0",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "nodemon": "^2.0.19",
+        "parser": "^0.1.4",
+        "uuid": "^8.3.2"
+    },
+    "name": "stackoverflow",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "nodemon"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dombreaker36/hrhrhrh.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/dombreaker36/hrhrhrh/issues"
+    },
+    "homepage": "https://github.com/dombreaker36/hrhrhrh#readme",
+    "description": ""
+}

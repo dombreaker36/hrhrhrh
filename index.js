@@ -10,6 +10,7 @@ const PORT = 5000
 
 app.use('/questions', questionRoutes)
 
+
 app.get('/', (req, res)=>{
   res.send('Welcome to Our Home Page')
 })

@@ -20,8 +20,7 @@ router.patch('/:id',celebrate({
 }),  controllers.updateQuestion)
 router.delete('/:id', controllers.deleteQuestion)
 // Answers
-router.get('/answers', controllers.getAnswers)
-router.get('/:id/answers', controllers.getAnswer)
-router.post('/answers', controllers.createAnswer)
+// router.get('/:id/answers/:id', controllers.getAnswer)
+router.post('/:id/answers', controllers.createAnswer)
 
 export default router

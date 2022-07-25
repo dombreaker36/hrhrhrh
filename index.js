@@ -1,6 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
-import questionRoutes from './routes/questions.js'
+import questionRoutes from './src/routes/questions.js'
 
 const app = express()
 

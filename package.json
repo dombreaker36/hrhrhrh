@@ -21,7 +21,7 @@
     "scripts": {
         "build": "babel src -d lib",
         "test": "jest",
-        "start": "nodemon index.js"
+        "start": "nodemon"
     },
     "repository": {
         "type": "git",

@@ -65,26 +65,26 @@ class controller {
     const createAns = {
       id: uuidv4(), 
       quesId: questionId,
-      answer: answer
+      answer: req.body.answer
     }
 
-    questions.push(createAns)
+    answers.push(createAns)
 
     res.status(201).json(answers)
   }
 
 
-  // static getAnswer = (req, res)=>{
-  //   const { id } = req.params.id
-  //   const myAns = answers.filter((answer)=>answer.quesId === id);
+  static getAnswer = (req, res)=>{
+    const { id } = req.params.id
+    const myAns = answers.filter((answer)=>answer.id === id);
 
-  //   if(!myAns) {
-  //     res.status(400).json({message:'Answer to this question does not exist'})
-  //   }
-  //   if(myAns) {
-  //     res.status(200).json(myAns)
-  //   }
-  // }
+    if(!myAns) {
+      res.status(400).json({message:'Answer to this question does not exist'})
+    }
+    if(myAns) {
+      res.status(200).json(myAns)
+    }
+  }
 }
 
 export default controller

@@ -17,9 +17,8 @@ class controller {
         password: req.body.password,
       };
 
-      Users.push(createUser);
+      return res.status(400).json('Email already exists')
 
-      res.status(201).json(Users);
     } catch (err) {
       res.status(400).json({ msg: err });
     }

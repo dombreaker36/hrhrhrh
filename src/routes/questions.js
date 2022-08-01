@@ -32,7 +32,7 @@ router.post(
   "/:id/answers",
   celebrate({
     [Segments.BODY]: Joi.object().keys({
-      answer: Joi.string().min (3).required(),
+      answer: Joi.string().min(3).required(),
     }),
   }),
   controllers.createAnswer

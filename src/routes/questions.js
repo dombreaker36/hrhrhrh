@@ -1,28 +1,20 @@
 import express from "express";
 import controllers from "../controllers/questions.js";
 import { celebrate, Joi, Segments } from "celebrate";
+import validate from '../validation/validation'
 
 const router = express.Router();
 
 router.get("/", controllers.getQuestions);
 router.get("/:id", controllers.getQuestion);
 router.post(
-  "/",
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      question: Joi.string().min(3).required(),
-    }),
-  }),
+  "/",validate.questionValidation,
   controllers.createQuestion
 );
 
 router.patch(
-  "/:id",
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      question: Joi.string().min(3).required(),
-    }),
-  }),
+  "/:id",validate.updateQuestion,
+
   controllers.updateQuestion
 );
 router.delete("/:id", controllers.deleteQuestion);
@@ -30,11 +22,7 @@ router.delete("/:id", controllers.deleteQuestion);
 
 router.post(
   "/:id/answers",
-  celebrate({
-    [Segments.BODY]: Joi.object().keys({
-      answer: Joi.string().min (3).required(),
-    }),
-  }),
+validate.createAnswer,
   controllers.createAnswer
 );
 

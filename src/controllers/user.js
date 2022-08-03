@@ -17,8 +17,7 @@ class controller {
         password: req.body.password,
       };
 
-      return res.status(400).json('Email already exists')
-
+      return res.status(400).json("Email already exists");
     } catch (err) {
       res.status(400).json({ msg: err });
     }

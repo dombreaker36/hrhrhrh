@@ -1,32 +1,56 @@
 import request from "supertest";
-import app from "../../app";
+import app from "../index.js";
+import Questions from '../model/question'
 
-describe("server route", () => {
-  it("return the home page with a message", async () => {
-    const res = await request(app).get("/");
-    expect(res.status).toBe(200);
-  });
-});
+describe("Get Questions", ()=>{
+  const newQues = {
+    id: "62e95a30ba5f9a24568f0758",
+    title: "question",
+    description:"What is question"
+  }
 
-describe("question routes", () => {
-  it("get all questions", async () => {
-    const res = await request(app).get("/questions");
-    expect(res.status).toBe(200);
-    expect(res.body[0].question).toequal("Questions");
-  });
+  beforeAll(async ()=>{
+    await request(app).post('/questions').send(newQues)
+  })
 
-  it("if the question doesnt exist", async () => {
-    const res = await request(app).get("/questions/p");
-    expect(res.status).toBe(400);
+  afterAll(async ()=>{
+    await request(app).delete(`/questions/${newQues.id}`)
+  })
 
-    expect(res.body.message).toequal("Question not found");
-  });
 
-  // it('Post a question', async ()=>{
-  //   const res = await request(app).post('/question')
-  //   .send({question: 'What is Question?'});
-  //   expect(res.status).toBe(201)
+  it("should return questions", async ()=>{
+    const response = await request(app).get("/questions");
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toStrictEqual([{
+      __v: 0, 
+      _id: "62e9733cfea51c1fd42d7175", 
+      description: "question", 
+      title: "question"
+    }]);
+  })
+
+
+  it("should return a single question", async ()=>{
+    const response = await request(app).get(`/questions/${newQues.id}`)
+
+    expect(response.status).toBe(200)
+    expect(response.body).toStrictEqual([{
+      __v: 0, 
+      _id: "62e9733cfea51c1fd42d7175", 
+      description: "question", 
+      title: "question"
+    }]);
+  })
+  // it("should update question if it exists", async ()=>{
+  //   const response =  await (await request(app).patch(`/questions/${newQues.id}`)).toStrictEqual({
+  //     title: "code",
+  //     description: "I hate tests but love them"
+  //   })
+
+  //   expect(response.statusCode).toBe(201)
   // })
-
-  // it('Update a specific Question', async ())
-});
+  it('Should delete a question', async ()=>{
+    const response = await request(app).delete(`/questions/${newQues.id}`)
+    expect(response.status).toStrictEqual(204)
+})
+})

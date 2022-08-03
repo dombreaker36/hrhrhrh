@@ -1,42 +1,42 @@
 {
-  "name": "stackoverflow",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "babel-node src/index.js",
-    "dev": "nodemon --watch src --exec babel-node src/index.js",
-    "lint": "prettier --write .",
-    "test": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/don336/StackOverflow.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/don336/StackOverflow/issues"
-  },
-  "homepage": "https://github.com/don336/StackOverflow#readme",
-  "devDependencies": {
-    "jest": "^28.1.3",
-    "prettier": "^2.7.1",
-    "supertest": "^6.2.4"
-  },
-  "dependencies": {
-    "@babel/cli": "^7.18.9",
-    "@babel/core": "^7.18.9",
-    "@babel/node": "^7.18.9",
-    "@babel/preset-env": "^7.18.9",
-    "body-parser": "^1.20.0",
-    "celebrate": "^15.0.1",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "joi": "^17.6.0",
-    "mongoose": "^6.5.0",
-    "nodemon": "^2.0.19",
-    "uuid": "^8.3.2"
-  }
+    "name": "stackoverflow",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "babel-node src/index.js",
+        "dev": "nodemon --watch src --exec babel-node src/index.js",
+        "lint": "prettier --write .",
+        "test": "jest src/__test__/app.test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/don336/StackOverflow.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/don336/StackOverflow/issues"
+    },
+    "homepage": "https://github.com/don336/StackOverflow#readme",
+    "devDependencies": {
+        "jest": "^28.1.3",
+        "prettier": "^2.7.1",
+        "supertest": "^6.2.4"
+    },
+    "dependencies": {
+        "@babel/cli": "^7.18.9",
+        "@babel/core": "^7.18.9",
+        "@babel/node": "^7.18.9",
+        "@babel/preset-env": "^7.18.9",
+        "body-parser": "^1.20.0",
+        "celebrate": "^15.0.1",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "joi": "^17.6.0",
+        "mongoose": "^6.5.0",
+        "nodemon": "^2.0.19",
+        "uuid": "^8.3.2"
+    }
 }

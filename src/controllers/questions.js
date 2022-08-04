@@ -18,15 +18,7 @@ class controller {
     try {
       const { id }  = req.params;
       const foundQues = await Question.findById(id)
-
-      if (!foundQues) {
-        res
-          .status(400)
-          .json({
-            error: `Question with id:${id} is not found in the database`,
-          });
-      }
-      res.json(foundQues);
+      res.status(200).json(foundQues);
     } catch (err) {
       return res.status(400)
     }

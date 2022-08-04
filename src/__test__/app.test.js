@@ -21,25 +21,25 @@ describe("Get Questions", ()=>{
   it("should return questions", async ()=>{
     const response = await request(app).get("/questions");
     expect(response.statusCode).toBe(200);
-    expect(response.body).toStrictEqual([{
-      __v: 0, 
-      _id: "62e9733cfea51c1fd42d7175", 
-      description: "question", 
-      title: "question"
-    }]);
+    // https://jestjs.io/docs/expect#expectarraycontainingarray
+    expect(response.body).toEqual(expect.arrayContaining([{
+        __v: 0, 
+        _id: "62e9733cfea51c1fd42d7175",
+       description: "question",
+        title: "question"}
+    ]));
   })
 
 
   it("should return a single question", async ()=>{
-    const response = await request(app).get(`/questions/${newQues.id}`)
+    const response = await request(app).get(`/questions/62e9733cfea51c1fd42d7175`)
 
     expect(response.status).toBe(200)
-    expect(response.body).toStrictEqual([{
+    expect(response.body).toEqual({
       __v: 0, 
-      _id: "62e9733cfea51c1fd42d7175", 
-      description: "question", 
-      title: "question"
-    }]);
+      _id: "62e9733cfea51c1fd42d7175",
+     description: "question",
+      title: "question"});
   })
   // it("should update question if it exists", async ()=>{
   //   const response =  await (await request(app).patch(`/questions/${newQues.id}`)).toStrictEqual({

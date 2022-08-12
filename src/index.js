@@ -1,12 +1,21 @@
 import express from "express";
 import { errors } from "celebrate";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
 import questions from "./routes/questions.js";
+import authRoute from "./routes/auth.js";
+import dotenv from "dotenv/config";
+// Connect Db
+mongoose.connect(process.env.DB_CONNECT, () => {
+  console.log("connected to DB");
+});
 
 const app = express();
 
 app.use(bodyParser.json());
 
+// MiddleWares
+app.use("/api/user", authRoute);
 app.use("/questions", questions);
 
 app.get("/", (req, res) => {

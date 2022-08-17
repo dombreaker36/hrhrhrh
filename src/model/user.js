@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -10,20 +9,19 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    index:true, 
-    unique:true,
-    sparse:true
+    index: true,
+    unique: true,
+    sparse: true,
   },
-  password: { 
-    type: String
-   },
+  password: {
+    type: String,
+  },
 
-  dateCreated: { 
-    type: Date, 
+  dateCreated: {
+    type: Date,
     default: Date.now,
-     immutable: true 
-    }
-
+    immutable: true,
+  },
 });
 
 export default mongoose.model("User", userSchema);

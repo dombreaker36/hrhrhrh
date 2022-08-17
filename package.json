@@ -7,7 +7,7 @@
         "start": "babel-node src/index.js",
         "dev": "nodemon --watch src --exec babel-node src/index.js",
         "lint": "prettier --write .",
-        "test": "jest src/__test__/app.test.js"
+        "test": "jest "
     },
     "repository": {
         "type": "git",

@@ -1,5 +1,5 @@
 import express from "express";
-import controllers from "../controllers/questions.js";
+import controllers from "../controllers/questions";
 import validate from "../validation/validation";
 
 const router = express.Router();
@@ -17,12 +17,9 @@ router.patch(
 router.delete("/:id", controllers.deleteQuestion);
 // Answers
 
-router.post(
-  "/:id/answers",
-validate.createAnswer,
-  controllers.createAnswer
-);
+router.post("/:id/answers", validate.createAnswer, controllers.createAnswer);
 
 router.get("/:id/answers/", controllers.getAnswer);
+router.patch("/:id/answers/ansid", controllers.updateAnswer)
 
 export default router;

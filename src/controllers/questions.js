@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import Question from "../model/question.js";
 import Answer from "../model/answer.js";
+import mongoose from "mongoose";
 
 class controller {
   // Get all questions
@@ -18,9 +19,10 @@ class controller {
     try {
       const { id } = req.params;
       const foundQues = await Question.findById(id);
-      return  res.status(200).json(foundQues);
+
+      return res.status(200).json(foundQues);
     } catch (err) {
-      return res.status(400);
+      return res.status(400).json({ message: "Question not found" });
     }
   }
 
@@ -28,13 +30,12 @@ class controller {
     try {
       const { title, description } = req.body;
 
-      const newQues = new Question({
-        id: uuidv4(),
+      const newQues = await Question.create({
         title,
         description,
       });
-      const savedQuestion = await newQues.save();
-      return res.status(201).json(savedQuestion);
+  
+      return res.status(201).json(newQues);
     } catch (err) {
       return res.status(400).json({ msg: err });
     }
@@ -52,7 +53,7 @@ class controller {
       );
       return res.status(201).json(updateQues);
     } catch (err) {
-       return res.status(400).json({ msg: err });
+      return res.status(400).json({ msg: "Un known question" });
     }
   }
 
@@ -63,51 +64,89 @@ class controller {
       const myQues = await Question.deleteOne({ _id: id });
 
       if (!myQues) res.status(400).json({ message: "Question not Found" });
-      if (myQues) {
-        return res.status(204).json({ message: "Question deleted" });
-      }
+
+      return res.status(204).json({ message: "Question deleted" });
     } catch (err) {
-     return res.status(400).json({ msg: err });
+      return res.status(400).json({ msg: err });
     }
   }
 
   static async createAnswer(req, res) {
+    const { title, description } = req.body;
+    const questionId = req.params.id
+
+    const verifyId = mongoose.Types.ObjectId.isValid(questionId)
+
+    const question = await Question.findOne({id: questionId})
+
+    if(!verifyId){
+      return res.status(400).json({err: "incorrect id/question not found"})
+    }
     try {
-      const { title, description } = req.body;
-
-      const questionId = req.params.id;
-
-
-      const createAns = new Answer({
-        id: uuidv4(),
-        questionId: questionId,
-        title: title,
-        description: description,
-      });
-
-      const savedAns = await createAns.save();
-
-      return res.status(201).json(savedAns);
+        const createAns =  await Answer.create({
+          questionId: questionId,
+          title,
+          description
+        });
+  
+        return res.status(201).json({
+          message: "Successfully Created",
+          answer: createAns
+        });
+      
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json({
+        error: "Cannot find the Question to add an answer",
+        msg: err
+      });
     }
   }
 
-
   static async getAnswer(req, res) {
-    const questionId  = req.params.id;
-
-    console.log(questionId)
-
-    const myAns = await Answer.find({id:questionId});
+    const questionId = req.params.id;
+    const verifyId = mongoose.Types.ObjectId.isValid(questionId)
+    if(!verifyId){
+      return res.status(400).json({err: "incorrect id/question not found"})
+    }
+    const myAns = await Answer.find({ id: questionId });
 
     if (!myAns) {
       return res
         .status(400)
         .json({ message: "Answer to this question does not exist" });
     }
-    if (myAns) {
-      return res.status(200).json(myAns);
+    return res.status(200).json(myAns);
+  }
+
+  static async updateAnswer(req, res) {
+    try {
+      const { ansid } = req.params;
+      const { id } = req.params
+      const { title, description } = req.body;
+
+      
+
+      const question = await Question.findOne({_id: id})
+
+      if(!question){
+        res.status(400).json({message: "Question not Found"})
+      }
+
+      const answer = await Answer.findOne({_id: ansid})
+
+      if(!answer){
+        return res.status(400).json({message: 'Answer not found'})
+      }
+
+      console.log(question)
+      // const updateAns = await Answer.findByIdAndUpdate(
+      //   { _id: ansid },
+      //   { $set: { title, description } },
+      //   {new: true}
+      // );
+      // return res.status(201).json(updateAns);
+    } catch (err) {
+      return res.status(400).json({ msg: err });
     }
   }
 }

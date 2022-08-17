@@ -15,8 +15,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // MiddleWares
-app.use("/auth/user", authRoute);
-app.use("/questions", questions);
+app.use("/auth/", authRoute);
+app.use("/questions/", questions);
 
 app.get("/", (req, res) => {
   res.send("Welcome to Our Home Page");

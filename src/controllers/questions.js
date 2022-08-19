@@ -138,13 +138,12 @@ class controller {
         return res.status(400).json({message: 'Answer not found'})
       }
 
-      console.log(question)
-      // const updateAns = await Answer.findByIdAndUpdate(
-      //   { _id: ansid },
-      //   { $set: { title, description } },
-      //   {new: true}
-      // );
-      // return res.status(201).json(updateAns);
+      const updateAns = await Answer.findByIdAndUpdate(
+        { _id: ansid },
+        { $set: { title, description } },
+        {new: true}
+      );
+      return res.status(201).json(updateAns);
     } catch (err) {
       return res.status(400).json({ msg: err });
     }

@@ -8,7 +8,7 @@ router.get("/", controllers.getQuestions);
 router.get("/:id", controllers.getQuestion);
 router.post("/", validate.questionValidation, controllers.createQuestion);
 
-router.patch(
+router.put(
   "/:id",
   validate.updateQuestion,
 
@@ -20,6 +20,9 @@ router.delete("/:id", controllers.deleteQuestion);
 router.post("/:id/answers", validate.createAnswer, controllers.createAnswer);
 
 router.get("/:id/answers/", controllers.getAnswer);
-router.patch("/:id/answers/ansid", controllers.updateAnswer)
+
+
+router.put("/:id/answers/ansid",controllers.updateAnswer);
+// <questionId>/answers/<answerId>
 
 export default router;

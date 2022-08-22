@@ -42,8 +42,8 @@ describe("Get Questions", function () {
     expect(response.body).toStrictEqual({ message: "Question not found" });
   });
 
-  it("shoult update a specific question on a specific id", async () => {
-    const response = await request(app).patch(`/questions/${questionId}`).send({
+  it("should update a specific question on a specific id", async () => {
+    const response = await request(app).put(`/questions/${questionId}`).send({
       title: "boyles",
       description: "what is Boyle's law",
     });
@@ -51,7 +51,7 @@ describe("Get Questions", function () {
   });
 
   it("should return an error message with a worng id passed", async () => {
-    const response = await request(app).patch(`/questions/123id`).send({
+    const response = await request(app).put(`/questions/123id`).send({
       title: "boyles",
       description: "what is Boyle's law",
     });

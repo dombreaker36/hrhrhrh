@@ -49,7 +49,7 @@ class controller {
 
     const passCheck = bcrypt.compare(password, user.password);
     if (!passCheck) {
-      return res.status(401).json({Error:"Check Email or Password"});
+      return res.status(401).json({ Error: "Check Email or Password" });
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);

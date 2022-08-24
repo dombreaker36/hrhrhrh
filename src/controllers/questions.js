@@ -34,7 +34,7 @@ class controller {
         title,
         description,
       });
-  
+
       return res.status(201).json(newQues);
     } catch (err) {
       return res.status(400).json({ msg: err });
@@ -73,51 +73,50 @@ class controller {
 
   static async createAnswer(req, res) {
     const { title, description } = req.body;
-    const questionId = req.params.id
+    const questionId = req.params.id;
 
-    const verifyId = mongoose.Types.ObjectId.isValid(questionId)
+    const verifyId = mongoose.Types.ObjectId.isValid(questionId);
 
-    const question = await Question.findOne({id: questionId})
+    const question = await Question.findOne({ id: questionId });
 
-    if(!verifyId){
-      return res.status(400).json({err: "incorrect id/question not found"})
+    if (!verifyId) {
+      return res.status(400).json({ err: "incorrect id/question not found" });
     }
     try {
-        const createAns =  await Answer.create({
-          questionId: questionId,
-          title,
-          description
-        });
-  
-        return res.status(201).json({
-          message: "Successfully Created",
-          answer: createAns
-        });
-      
+      const createAns = await Answer.create({
+        questionId: questionId,
+        title,
+        description,
+      });
+
+      return res.status(201).json({
+        message: "Successfully Created",
+        answer: createAns,
+      });
     } catch (err) {
       return res.status(400).json({
         error: "Cannot find the Question to add an answer",
-        msg: err
+        msg: err,
       });
     }
   }
 
   static async getAnswer(req, res) {
-    try{
+    try {
       const questionId = req.params.id;
-      const verifyId = mongoose.Types.ObjectId.isValid(questionId)
-      if(!verifyId){
-        return res.status(400).json({err: "incorrect id/question not found"})
+      const verifyId = mongoose.Types.ObjectId.isValid(questionId);
+      if (!verifyId) {
+        return res.status(400).json({ err: "incorrect id/question not found" });
       }
       const myAns = await Answer.find({ questionId: questionId });
 
       return res.status(200).json(myAns);
-    }catch(err){
+    } catch (err) {
       return res.status(400).json({
-        msg: err
-      })
+        msg: err,
+      });
     }
-    }
+  }
 
   static async updateAnswer(req, res) {
     try {
@@ -135,18 +134,19 @@ class controller {
         return res.status(400).json({ message: "Answer not found" });
       }
 
-      const newAnswer =  await Answer.updateOne(
+      const newAnswer = await Answer.updateOne(
         { _id: ansid },
-       {
-         $set:{
-               title: title,
-                description: description
-               }},
-       { new: true }
+        {
+          $set: {
+            title: title,
+            description: description,
+          },
+        },
+        { new: true }
       );
       return res.status(201).json({
         message: "Answer updated",
-        answer: newAnswer
+        answer: newAnswer,
       });
     } catch (err) {
       return res.status(400).json(err);

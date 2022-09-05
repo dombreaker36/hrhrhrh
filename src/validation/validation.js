@@ -31,7 +31,7 @@ class validate {
   static signIn = celebrate({
     [Segments.BODY]: Joi.object().keys({
       email: Joi.string().min(3).max(320).required().email(),
-      password: Joi.string().min(8).max(127).required(),
+      password: Joi.string().min(8).max().required(127),
     }),
   });
 }

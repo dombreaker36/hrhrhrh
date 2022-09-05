@@ -21,9 +21,15 @@ describe("Testing the answer's EndPoint", function () {
   });
 
   it("should post an answer to a specific question", async () => {
-    const res = await request(app)
-      .post(`/questions/62f8f0d55fed9b04f8325a6a/answers`)
-      .send({
+    const login = await request(app).post("/auth/signin").send({
+      email: "donlike@gmail.com",
+      password: "$2b$10$MyoIxjTpZ/JNzKnPqt0xrujAetjyQHFNDAYnhK8jdlZD8l3UTritm"
+    })
+
+
+     const token = login.body.token
+
+    const res = await request(app).post(`/questions/62f8f0d55fed9b04f8325a6a/answers`).set('Authorization', token).send({
         title: "answer",
         description: "answer",
       });
@@ -43,14 +49,30 @@ describe("Testing the answer's EndPoint", function () {
       },
     });
   });
+  it("should not post an answer if a wrong question id is passed", async () => {
+    const login = await request(app).post("/auth/signin").send({
+      email: "donlike@gmail.com",
+      password: "$2b$10$MyoIxjTpZ/JNzKnPqt0xrujAetjyQHFNDAYnhK8jdlZD8l3UTritm"
+    })
 
-  it("should return an error message with a wrong question id passed", async () => {
+     const token = login.body.token
+    const res = await request(app).post(`/questions/invalid/answers`).set('Authorization', token).send({
+        title: "answer",
+        description: "answer",
+      });
+      expect(res.status).toBe(400)
+      expect(res.body).toStrictEqual({
+        err: "incorrect id/question not found"
+      })
+  });
+
+  it("should return an auth message with no token passed", async () => {
     const res = await request(app).post(`/questions/invalidId/answers`).send({
       title: "answer",
       description: "answer",
     });
 
-    expect(res.body).toStrictEqual({ err: "incorrect id/question not found" });
+    expect(res.body).toStrictEqual({ message: "Authorisation Failed" });
   });
 
   it("should return an answer when the question id is passed", async () => {
@@ -63,22 +85,20 @@ describe("Testing the answer's EndPoint", function () {
     expect(res.body._id).toStrictEqual(answerId);
   });
 
-  // it("should not update answer with a wrong answer id", async ()=>{
-  //   const res = await request(app).put(`/questions/6300db35cfa6fa7cdc242724/answers/asjjdjdkdjskfsk`).send({
-  //     title: "second answer",
-  //     description: "my second answer",
-  //   })
+  it("should update an answer if the user is logged in", async ()=>{
+    const login = await request(app).post("/auth/signin").send({
+      email: "donlike@gmail.com",
+      password: "$2b$10$MyoIxjTpZ/JNzKnPqt0xrujAetjyQHFNDAYnhK8jdlZD8l3UTritm"
+    })
+     const token = login.body.token
+    const res = await request(app).put("/questions/6300db35cfa6fa7cdc242724/answers/6315d309baa8c14f83b5a4db").set('Authorization', token).send({
+      title:"answer",
+      dscription:"My one and only answer"
+    })
 
-  //   expect(res.status).toBe(400);
-  //   expect(res.body.message).toStrictEqual("Answer not  found")
-  // })
-  // it("should not update answer with a wrong question id", async ()=>{
-  //   const res = await request(app).put(`/questions/fdfjdfdjfjdfhjfdh/answers/6300fc178cbf67c44f42c8d4`).send({
-  //     title: "second answer",
-  //     description: "my second answer",
-  //   })
-
-  //   expect(res.status).toBe(400);
-  //   expect(res.body.message).toStrictEqual("question not found")
-  // })
+    expect(res.status).toBe(201)
+    expect(res.body).toEqual({
+      message: "Answer updated"
+    })
+  })
 });

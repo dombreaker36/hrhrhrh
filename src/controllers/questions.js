@@ -145,8 +145,7 @@ class controller {
         { new: true }
       );
       return res.status(201).json({
-        message: "Answer updated",
-        answer: newAnswer,
+        message: "Answer updated"
       });
     } catch (err) {
       return res.status(400).json(err);

@@ -8,14 +8,15 @@ describe("Get Questions", function () {
     title: "question",
     description: "What is question",
   };
+
   beforeAll(async function () {
     const newQuestion = await request(app).post("/questions").send(newQues);
     questionId = newQuestion.body._id;
   });
 
-  afterAll(async function () {
-    await request(app).delete(`/questions/${questionId}`);
-  });
+  // afterAll(async function () {
+  //   await request(app).delete(`/questions/${questionId}`);
+  // });
 
   it("should return questions", async () => {
     const response = await request(app).get("/questions").send({});
@@ -26,13 +27,10 @@ describe("Get Questions", function () {
 
   it("should return a single question", async () => {
     console.log(questionId);
-    const response = await request(app)
-      .get(`/questions/${questionId}`)
-      .send({});
+    const response = await request(app).get(`/questions/6300db35cfa6fa7cdc242724`).send({});
 
-    // expect(response.status).toEqual(200)
-    expect(response.body.title).toEqual("question");
-    expect(response.body.id).toEqual(newQues._id);
+    expect(response.status).toEqual(200)
+    expect(response.body.title).toEqual("boe's law");
   });
 
   it("should return error on a wrong id", async () => {
@@ -43,15 +41,27 @@ describe("Get Questions", function () {
   });
 
   it("should update a specific question on a specific id", async () => {
-    const response = await request(app).put(`/questions/${questionId}`).send({
+    const login = await request(app).post("/auth/signin").send({
+      email: "donlike@gmail.com",
+      password: "$2b$10$MyoIxjTpZ/JNzKnPqt0xrujAetjyQHFNDAYnhK8jdlZD8l3UTritm"
+    })
+    const token = login.body.token
+
+    const response = await request(app).put(`/questions/6300db35cfa6fa7cdc242724`).set('Authorization', token).send({
       title: "boyles",
       description: "what is Boyle's law",
     });
     expect(response.status).toBe(201);
   });
 
-  it("should return an error message with a worng id passed", async () => {
-    const response = await request(app).put(`/questions/123id`).send({
+  it("should return an error message with a wrong id passed", async () => {
+    const login = await request(app).post("/auth/signin").send({
+      email: "donlike@gmail.com",
+      password: "$2b$10$MyoIxjTpZ/JNzKnPqt0xrujAetjyQHFNDAYnhK8jdlZD8l3UTritm"
+    })
+    const token = login.body.token
+
+    const response = await request(app).put(`/questions/123id`).set("Authorization", token).send({
       title: "boyles",
       description: "what is Boyle's law",
     });
@@ -64,7 +74,7 @@ describe("Get Questions", function () {
 
   it("should delete a question", async () => {
     const response = await request(app)
-      .delete(`/questions/${questionId}`)
+      .delete(`/questions/6300db35cfa6fa7cdc242724`)
       .send({});
 
     expect(response.status).toBe(204);
